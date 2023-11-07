@@ -2,7 +2,6 @@
 {
     public class AddEmployeePayload
     {
-        public int Id { get; }
         public string Name { get; }
         public string Surname { get; }
         public Gender Gender { get; }
@@ -11,9 +10,8 @@
         public string Email { get; }
         public PhoneNumberModel PhoneNumber { get; }
 
-        public AddEmployeePayload(int id, string name, string surname, Gender gender, bool isManager, decimal salary, string email, PhoneNumberModel phoneNumber)
+        public AddEmployeePayload(string name, string surname, Gender gender, bool isManager, decimal salary, string email, PhoneNumberModel phoneNumber)
         {
-            Id = id;
             Name = name;
             Surname = surname;
             Gender = gender;
