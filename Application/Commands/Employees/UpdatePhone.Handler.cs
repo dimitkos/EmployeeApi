@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Commands.Employees
 {
-    public class UpdatePhoneHandler : IRequestHandler<UpdatePhone, Unit>
+    class UpdatePhoneHandler : IRequestHandler<UpdatePhone, Unit>
     {
         private readonly IEmployeePersistence _persistence;
         private readonly IEntityRetrieval<Employee, int> _retrieval;

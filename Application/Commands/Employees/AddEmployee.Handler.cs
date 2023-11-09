@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Application.Commands.Employees
 {
-    public class AddEmployeeHandler : IRequestHandler<AddEmployee, Unit>
+    class AddEmployeeHandler : IRequestHandler<AddEmployee, Unit>
     {
         private readonly IEmployeePersistence _persistence;
 

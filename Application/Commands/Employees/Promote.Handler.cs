@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Commands.Employees
 {
-    public class PromoteHandler : IRequestHandler<Promote, Unit>
+    class PromoteHandler : IRequestHandler<Promote, Unit>
     {
         private readonly IEmployeePersistence _persistence;
         private readonly IEntityRetrieval<Employee, int> _retrieval;

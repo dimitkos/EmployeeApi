@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Commands.Employees
 {
-    public class UpdateSalaryHandler : IRequestHandler<UpdateSalary, Unit>
+    class UpdateSalaryHandler : IRequestHandler<UpdateSalary, Unit>
     {
         private readonly IEmployeePersistence _persistence;
         private readonly IEntityRetrieval<Employee, int> _retrieval;
