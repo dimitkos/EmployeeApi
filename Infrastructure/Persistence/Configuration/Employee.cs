@@ -16,8 +16,7 @@ namespace Infrastructure.Persistence.Configuration
             builder.Property(x => x.Surname).HasMaxLength(25).IsRequired();
             builder.Property(x => x.Gender).IsRequired();
             builder.Property(x => x.IsManager).IsRequired();
-#warning add decomal representation
-            builder.Property(x => x.Salary).IsRequired();
+            builder.Property(x => x.Salary).IsRequired().HasColumnType("decimal(19,4)");
             builder.Property(x => x.Email).HasMaxLength(30).IsRequired();
             builder.Property(x => x.CreatedAt).IsRequired();
             builder.Property(x => x.UpdatedAt).IsRequired();

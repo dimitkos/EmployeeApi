@@ -7,9 +7,9 @@ namespace Application.Commands.Employees
     class PromoteHandler : IRequestHandler<Promote, Unit>
     {
         private readonly IEmployeePersistence _persistence;
-        private readonly IEntityRetrieval<Employee, int> _retrieval;
+        private readonly IEntityRetrieval<int, Employee> _retrieval;
 
-        public PromoteHandler(IEmployeePersistence persistence, IEntityRetrieval<Employee, int> retrieval)
+        public PromoteHandler(IEmployeePersistence persistence, IEntityRetrieval<int, Employee> retrieval)
         {
             _persistence = persistence;
             _retrieval = retrieval;
