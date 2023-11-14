@@ -10,5 +10,6 @@ namespace Application.Services.Infrastructure
         Task UpdateEmail(Employee employee);
         Task UpdatePhone(Employee employee);
         Task UpdateSalary(Employee employee);
+        Task DeleteEmployees(int[] employeeIds);
     }
 }

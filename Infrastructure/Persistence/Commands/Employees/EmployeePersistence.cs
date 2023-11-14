@@ -64,5 +64,12 @@ namespace Infrastructure.Persistence.Commands.Employees
 
             await context.SaveChangesAsync();
         }
+
+        public async Task DeleteEmployees(int[] employeeIds)
+        {
+            using var context = new EmployeeDbContext(_options);
+
+            await context.Database.ExecuteSqlRawAsync($"Delete from Employees where Id in {string.Join(",", employeeIds)}");
+        }
     }
 }

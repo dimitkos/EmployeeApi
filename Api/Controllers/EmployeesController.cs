@@ -80,5 +80,13 @@ namespace Api.Controllers
             await _mediator.Send(new UpdateSalary(payload));
             return Ok();
         }
+
+        [HttpDelete("DeleteEmployees")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteEmployees([FromBody] int[] employeeIds)
+        {
+            await _mediator.Send(new DeleteEmployees(employeeIds));
+            return Ok();
+        }
     }
 }
