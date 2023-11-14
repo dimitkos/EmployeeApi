@@ -3,7 +3,7 @@ using Domain.Aggregates;
 using Infrastructure.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence.Commands.Students
+namespace Infrastructure.Persistence.Commands.Employees
 {
     class EmployeeRetrievePersistence : IEntityRetrieval<int, Employee>
     {

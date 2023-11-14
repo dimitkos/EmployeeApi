@@ -1,4 +1,8 @@
+using Application;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Common;
+using Infrastructure;
 using Infrastructure.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,11 +15,11 @@ namespace Api
             var builder = WebApplication.CreateBuilder(args);
             //when i add autofac
             //https://stackoverflow.com/questions/69754985/adding-autofac-to-net-core-6-0-using-the-new-single-file-template
-            //builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
-            //        .ConfigureContainer<ContainerBuilder>(builder =>
-            //        {
-            //            builder.RegisterModule(new AutofacBusinessModule());
-            //        });
+            builder.Host.UseServiceProviderFactory<ContainerBuilder>(new AutofacServiceProviderFactory())
+                    .ConfigureContainer((Action<ContainerBuilder>)(builder =>
+                    {
+                        RegisterAutofacModules(builder);
+                    }));
 
             ConfigureServices(builder.Services, builder.Configuration);
 
@@ -64,6 +68,13 @@ namespace Api
         {
 #warning check how validate this
             services.Configure<ApiInstanceSettings>(configuration.GetSection("ApiInstanceSettings"));
+        }
+
+        private static void RegisterAutofacModules(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new AutofacApiModule());
+            builder.RegisterModule(new AutofacApplicationModule());
+            builder.RegisterModule(new AutofacInfrastructureModule());
         }
 
         private static void RegisterDatabase(IServiceCollection services, ConfigurationManager configuration)
