@@ -17,7 +17,7 @@ namespace Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllEmployees")]
         [ProducesResponseType(typeof(EmployeeModel[]), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllEmployees()
         {

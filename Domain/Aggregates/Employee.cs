@@ -31,6 +31,11 @@ namespace Domain.Aggregates
             UpdatedAt = updatedAt;
         }
 
+        private Employee()
+        {
+
+        }
+
         public static Employee Create(int id, string name, string surname, Gender gender, decimal salary, string email, PhoneNumber phoneNumber)
         {
             var employee = new Employee(

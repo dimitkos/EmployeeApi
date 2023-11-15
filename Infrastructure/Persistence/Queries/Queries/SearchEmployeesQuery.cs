@@ -23,31 +23,31 @@ namespace Infrastructure.Persistence.Queries.Queries
             var employees = context.Employees as IQueryable<Employee>;
 
             if (query.Payload.Gender.HasValue)
-                employees.Where(x => x.Gender == query.Payload.Gender);
+                employees = employees.Where(x => x.Gender == query.Payload.Gender);
 
             if (query.Payload.IsManager.HasValue)
-                employees.Where(x => x.IsManager == query.Payload.IsManager);
+                employees = employees.Where(x => x.IsManager == query.Payload.IsManager);
 
             if (query.Payload.DateFrom.HasValue)
-                employees.Where(x => x.CreatedAt >= query.Payload.DateFrom);
+                employees = employees.Where(x => x.CreatedAt >= query.Payload.DateFrom);
 
             if (query.Payload.DateTo.HasValue)
-                employees.Where(x => x.CreatedAt <= query.Payload.DateTo);
+                employees = employees.Where(x => x.CreatedAt <= query.Payload.DateTo);
 
             if (query.Payload.Salary.HasValue)
-                employees.Where(x => x.Salary >= query.Payload.Salary);
+                employees = employees.Where(x => x.Salary >= query.Payload.Salary);
 
             if (query.Payload.Salary.HasValue)
-                employees.Where(x => x.Salary <= query.Payload.Salary);
+                employees = employees.Where(x => x.Salary <= query.Payload.Salary);
 
             if (query.Payload.Email is not null)
-                employees.Where(x => x.Email.Contains(query.Payload.Email));
+                employees = employees.Where(x => x.Email.Contains(query.Payload.Email));
 
             if (query.Payload.Surname is not null)
-                employees.Where(x => x.Surname.Contains(query.Payload.Surname));
+                employees = employees.Where(x => x.Surname.Contains(query.Payload.Surname));
 
             if (query.Payload.Paging is not null)
-                employees.OrderBy(x => x.Id).Skip(query.Payload.Paging.Skip).Take(query.Payload.Paging.Take);
+                employees = employees.OrderBy(x => x.Id).Skip(query.Payload.Paging.Skip).Take(query.Payload.Paging.Take);
 
             var employeeModels = await employees.ToArrayAsync();
 

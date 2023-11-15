@@ -1,0 +1,4 @@
+﻿Add-Migration [MigrationName] -Context EmployeeDbContext -OutputDir Persistence\DatabaseContext\Migrations
+Remove-Migration -context EmployeeDbContext 
+Update-Database -context EmployeeDbContext 
+Script-Migration -From [OldMigrationName] -To [NewMigrationName] -Context EmployeeDbContext 

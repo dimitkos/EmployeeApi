@@ -44,12 +44,15 @@ namespace Infrastructure.Persistence.Commands.Employees
             await context.SaveChangesAsync();
         }
 
-#warning check how can update an owned entity
         public async Task UpdatePhone(Employee employee)
         {
             using var context = new EmployeeDbContext(_options);
 
-            context.Update(employee);
+            var employeeEntry = context.Attach(employee);
+            var phoneEntry = employeeEntry.Reference(e => e.PhoneNumber);
+            phoneEntry.TargetEntry!.Property(e => e.Phone).IsModified = true;
+            phoneEntry.TargetEntry.Property(e => e.MobilePhone).IsModified = true;
+            employeeEntry.Property(x => x.UpdatedAt).IsModified = true;
 
             await context.SaveChangesAsync();
         }
@@ -69,7 +72,7 @@ namespace Infrastructure.Persistence.Commands.Employees
         {
             using var context = new EmployeeDbContext(_options);
 
-            await context.Database.ExecuteSqlRawAsync($"Delete from Employees where Id in {string.Join(",", employeeIds)}");
+            await context.Database.ExecuteSqlRawAsync($"Delete from Employees where Id in ({string.Join(',', employeeIds)})");
         }
     }
 }
