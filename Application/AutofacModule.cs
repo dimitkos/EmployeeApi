@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using Application.Behaviors;
+using Autofac;
 using MediatR.Extensions.Autofac.DependencyInjection;
 using MediatR.Extensions.Autofac.DependencyInjection.Builder;
 using System.Reflection;
@@ -15,6 +16,7 @@ namespace Application
                 .Create(thisAssembly)
                 .WithAllOpenGenericHandlerTypesRegistered()
                 .WithRegistrationScope(RegistrationScope.Scoped)
+                .WithCustomPipelineBehavior(typeof(ValidationBehavior<,>))
                 .Build();
 
             builder.RegisterMediatR(configuration);

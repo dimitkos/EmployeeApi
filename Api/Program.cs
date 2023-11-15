@@ -2,9 +2,11 @@ using Application;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Common;
+using FluentValidation;
 using Infrastructure;
 using Infrastructure.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Api
 {
@@ -13,8 +15,7 @@ namespace Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            //when i add autofac
-            //https://stackoverflow.com/questions/69754985/adding-autofac-to-net-core-6-0-using-the-new-single-file-template
+
             builder.Host.UseServiceProviderFactory<ContainerBuilder>(new AutofacServiceProviderFactory())
                     .ConfigureContainer((Action<ContainerBuilder>)(builder =>
                     {
@@ -31,12 +32,13 @@ namespace Api
         private static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration)
         {
             services.AddControllers();
+            services.AddValidatorsFromAssembly(Assembly.GetAssembly(typeof(AutofacApplicationModule)));
             services.AddAuthorization();
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-            var apiInstanceSettings = configuration.GetSection("ApiInstance").Get<ApiInstanceSettings>();
+            var apiInstanceSettings = configuration.GetSection(nameof(ApiInstanceSettings)).Get<ApiInstanceSettings>();
 #warning configure id gen
 
             RegisterConfiguration(services, configuration);
@@ -66,8 +68,7 @@ namespace Api
 
         private static void RegisterConfiguration(IServiceCollection services, ConfigurationManager configuration)
         {
-#warning check how validate this
-            services.Configure<ApiInstanceSettings>(configuration.GetSection("ApiInstanceSettings"));
+            services.AddOptions<ApiInstanceSettings>().Bind(configuration.GetSection(nameof(ApiInstanceSettings))).ValidateDataAnnotations();
         }
 
         private static void RegisterAutofacModules(ContainerBuilder builder)

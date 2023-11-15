@@ -52,7 +52,7 @@ namespace Domain.Aggregates
 
             return employee;
         }
-#warning return modification isntead of object
+
         public Employee Promote()
         {
             IsManager = true;

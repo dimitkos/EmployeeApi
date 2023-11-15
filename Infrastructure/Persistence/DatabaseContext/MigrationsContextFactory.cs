@@ -12,7 +12,6 @@ namespace Infrastructure.Persistence.DatabaseContext
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Path.GetFullPath(@"../Api/"))
                 .AddJsonFile("appsettings.json")
-#warning maybe i do not need this
                 //.AddJsonFile("appsettings.Development.json", optional: false)
                 .Build();
 
