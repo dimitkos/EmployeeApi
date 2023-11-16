@@ -1,6 +1,7 @@
 ﻿using Application.Services.Infrastructure;
 using Domain.Aggregates;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Commands.Employees
 {
@@ -8,11 +9,16 @@ namespace Application.Commands.Employees
     {
         private readonly IEmployeePersistence _persistence;
         private readonly IEntityRetrieval<int, Employee> _retrieval;
+        private readonly ILogger<UpdateEmailHandler> _logger;
 
-        public UpdateEmailHandler(IEmployeePersistence persistence, IEntityRetrieval<int, Employee> retrieval)
+        public UpdateEmailHandler(
+            IEmployeePersistence persistence,
+            IEntityRetrieval<int, Employee> retrieval,
+            ILogger<UpdateEmailHandler> logger)
         {
             _persistence = persistence;
             _retrieval = retrieval;
+            _logger = logger;
         }
 
         public async Task<Unit> Handle(UpdateEmail request, CancellationToken cancellationToken)
@@ -25,6 +31,8 @@ namespace Application.Commands.Employees
             var modification = employee.UpdateEmail(request.Payload.Email);
 
             await _persistence.UpdateEmail(modification);
+
+            _logger.LogInformation("Employee with Id: {id} change email to : {email}", modification.Id, modification.Email);
 
             return Unit.Value;
         }

@@ -6,6 +6,7 @@ using FluentValidation;
 using Infrastructure;
 using Infrastructure.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using System.Reflection;
 
 namespace Api
@@ -16,11 +17,19 @@ namespace Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Host.UseServiceProviderFactory<ContainerBuilder>(new AutofacServiceProviderFactory())
+            builder.Host
+                .UseSerilog((context, configuration) =>
+                        configuration.ReadFrom.Configuration(context.Configuration))
+                .UseServiceProviderFactory<ContainerBuilder>(new AutofacServiceProviderFactory())
                     .ConfigureContainer((Action<ContainerBuilder>)(builder =>
                     {
                         RegisterAutofacModules(builder);
                     }));
+
+            var serilogLogger = new LoggerConfiguration()
+                    .CreateLogger();
+
+            serilogLogger.Information("");
 
             ConfigureServices(builder.Services, builder.Configuration);
 

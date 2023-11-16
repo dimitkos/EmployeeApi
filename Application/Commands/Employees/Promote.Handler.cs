@@ -1,6 +1,7 @@
 ﻿using Application.Services.Infrastructure;
 using Domain.Aggregates;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Commands.Employees
 {
@@ -8,11 +9,13 @@ namespace Application.Commands.Employees
     {
         private readonly IEmployeePersistence _persistence;
         private readonly IEntityRetrieval<int, Employee> _retrieval;
+        private readonly ILogger<PromoteHandler> _logger;
 
-        public PromoteHandler(IEmployeePersistence persistence, IEntityRetrieval<int, Employee> retrieval)
+        public PromoteHandler(IEmployeePersistence persistence, IEntityRetrieval<int, Employee> retrieval, ILogger<PromoteHandler> logger)
         {
             _persistence = persistence;
             _retrieval = retrieval;
+            _logger = logger;
         }
 
         public async Task<Unit> Handle(Promote request, CancellationToken cancellationToken)
@@ -25,6 +28,8 @@ namespace Application.Commands.Employees
             var modification = employee.Promote();
 
             await _persistence.Promote(modification);
+
+            _logger.LogInformation("Employee with Id: {id} promoted", modification.Id);
 
             return Unit.Value;
         }

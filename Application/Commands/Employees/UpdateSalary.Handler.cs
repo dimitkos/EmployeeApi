@@ -1,6 +1,7 @@
 ﻿using Application.Services.Infrastructure;
 using Domain.Aggregates;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Commands.Employees
 {
@@ -8,11 +9,13 @@ namespace Application.Commands.Employees
     {
         private readonly IEmployeePersistence _persistence;
         private readonly IEntityRetrieval<int, Employee> _retrieval;
+        private readonly ILogger<UpdateSalaryHandler> _logger;
 
-        public UpdateSalaryHandler(IEmployeePersistence persistence, IEntityRetrieval<int, Employee> retrieval)
+        public UpdateSalaryHandler(IEmployeePersistence persistence, IEntityRetrieval<int, Employee> retrieval, ILogger<UpdateSalaryHandler> logger)
         {
             _persistence = persistence;
             _retrieval = retrieval;
+            _logger = logger;
         }
 
         public async Task<Unit> Handle(UpdateSalary request, CancellationToken cancellationToken)
@@ -25,6 +28,8 @@ namespace Application.Commands.Employees
             var modification = employee.UpdateSalary(request.Payload.Salary);
 
             await _persistence.UpdateSalary(modification);
+
+            _logger.LogInformation("Employee with Id: {id} change salary : {salary}", modification.Id, modification.Salary);
 
             return Unit.Value;
         }
