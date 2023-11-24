@@ -14,6 +14,16 @@ namespace Infrastructure.Persistence.Commands.Employees
             _options = options;
         }
 
+        public async Task<Employee> Retrieve(int key)
+        {
+            var employee = await TryRetrieve(key);
+
+            if (employee == null)
+                throw new Exception($"Could not find employee with id: {key}");
+
+            return employee;
+        }
+
         public async Task<Employee?> TryRetrieve(int key)
         {
             using var context = new EmployeeDbContext(_options);

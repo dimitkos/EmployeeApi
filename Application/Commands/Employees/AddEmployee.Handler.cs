@@ -21,7 +21,7 @@ namespace Application.Commands.Employees
         {
 #warning add id generator
             var employee = Employee.Create(
-                id: 2,
+                id: 3,
                 name: request.Payload.Name,
                 surname: request.Payload.Surname,
                 gender: request.Payload.Gender,
