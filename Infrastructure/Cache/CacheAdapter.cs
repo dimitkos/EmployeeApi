@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿using Common;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Cache
 {
@@ -15,11 +17,13 @@ namespace Infrastructure.Cache
     {
         private readonly IMemoryCache _cache;
         private readonly MemoryCacheEntryOptions _cacheOptions;
+        private readonly CacheSettings _cacheSettings;
 
-        public CacheAdapter(IMemoryCache cache)
+        public CacheAdapter(IMemoryCache cache, IOptions<CacheSettings> options)
         {
             _cache = cache;
-            _cacheOptions = new MemoryCacheEntryOptions { SlidingExpiration = TimeSpan.FromMinutes(5) };
+            _cacheSettings = options.Value;
+            _cacheOptions = new MemoryCacheEntryOptions { SlidingExpiration = TimeSpan.FromMinutes(_cacheSettings.SlidingExpiration), AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(_cacheSettings.AbsoluteExpiration)};
         }
 
         public TEntity? TryGet(TKey key)

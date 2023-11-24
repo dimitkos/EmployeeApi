@@ -78,6 +78,7 @@ namespace Api
         private static void RegisterConfiguration(IServiceCollection services, ConfigurationManager configuration)
         {
             services.AddOptions<ApiInstanceSettings>().Bind(configuration.GetSection(nameof(ApiInstanceSettings))).ValidateDataAnnotations();
+            services.AddOptions<CacheSettings>().Bind(configuration.GetSection(nameof(CacheSettings))).ValidateDataAnnotations();
         }
 
         private static void RegisterAutofacModules(ContainerBuilder builder)
