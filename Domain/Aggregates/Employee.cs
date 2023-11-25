@@ -3,8 +3,7 @@ using Shared;
 
 namespace Domain.Aggregates
 {
-#warning add aggregateroot that contains id
-    public class Employee
+    public class Employee : AggregateRoot<long>
     {
         public long Id { get; }
         public string Name { get; }
@@ -17,7 +16,7 @@ namespace Domain.Aggregates
         public DateTime CreatedAt { get; }
         public DateTime UpdatedAt { get; private set; }
 
-        public Employee(long id, string name, string surname, Gender gender, bool isManager, decimal salary, string email, PhoneNumber phoneNumber, DateTime createdAt, DateTime updatedAt)
+        public Employee(long id, string name, string surname, Gender gender, bool isManager, decimal salary, string email, PhoneNumber phoneNumber, DateTime createdAt, DateTime updatedAt) : base(id)
         {
             Id = id;
             Name = name;
@@ -31,7 +30,7 @@ namespace Domain.Aggregates
             UpdatedAt = updatedAt;
         }
 
-        private Employee()
+        private Employee() : base(default)
         {
 
         }

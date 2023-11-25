@@ -1,10 +1,12 @@
 ﻿using Common;
+using Domain;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Cache
 {
-    interface ICacheAdapter<TKey, TEntity> where TKey : notnull
+    interface ICacheAdapter<TKey, TEntity> 
+        where TKey : notnull
     {
         void Set(TKey key, TEntity value);
         void Remove(TKey[] keys);
