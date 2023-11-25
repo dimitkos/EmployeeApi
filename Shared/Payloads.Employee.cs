@@ -24,10 +24,10 @@
 
     public class UpdatePhonePayload
     {
-        public int EmployeeId { get; }
+        public long EmployeeId { get; }
         public PhoneNumberModel PhoneNumber { get; }
 
-        public UpdatePhonePayload(int employeeId, PhoneNumberModel phoneNumber)
+        public UpdatePhonePayload(long employeeId, PhoneNumberModel phoneNumber)
         {
             EmployeeId = employeeId;
             PhoneNumber = phoneNumber;
@@ -36,10 +36,10 @@
 
     public class UpdateEmailPayload
     {
-        public int EmployeeId { get; }
+        public long EmployeeId { get; }
         public string Email { get; }
 
-        public UpdateEmailPayload(int employeeId, string email)
+        public UpdateEmailPayload(long employeeId, string email)
         {
             EmployeeId = employeeId;
             Email = email;
@@ -48,10 +48,10 @@
 
     public class UpdateSalaryPayload
     {
-        public int EmployeeId { get; }
+        public long EmployeeId { get; }
         public decimal Salary { get; }
 
-        public UpdateSalaryPayload(int employeeId, decimal salary)
+        public UpdateSalaryPayload(long employeeId, decimal salary)
         {
             EmployeeId = employeeId;
             Salary = salary;

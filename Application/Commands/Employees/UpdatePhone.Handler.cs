@@ -9,12 +9,12 @@ namespace Application.Commands.Employees
     class UpdatePhoneHandler : IRequestHandler<UpdatePhone, Unit>
     {
         private readonly IEmployeePersistence _persistence;
-        private readonly IEntityRetrieval<int, Employee> _retrieval;
+        private readonly IEntityRetrieval<long, Employee> _retrieval;
         private readonly ILogger<UpdatePhoneHandler> _logger;
 
         public UpdatePhoneHandler(
             IEmployeePersistence persistence,
-            IEntityRetrieval<int, Employee> retrieval,
+            IEntityRetrieval<long, Employee> retrieval,
             ILogger<UpdatePhoneHandler> logger)
         {
             _persistence = persistence;

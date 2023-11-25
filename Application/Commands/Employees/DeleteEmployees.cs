@@ -4,9 +4,9 @@ namespace Application.Commands.Employees
 {
     public class DeleteEmployees : IRequest<Unit>
     {
-        public int[] EmployeeIds { get; }
+        public long[] EmployeeIds { get; }
 
-        public DeleteEmployees(int[] employeeIds)
+        public DeleteEmployees(long[] employeeIds)
         {
             EmployeeIds = employeeIds;
         }

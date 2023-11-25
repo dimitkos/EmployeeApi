@@ -5,9 +5,9 @@ namespace Application.Queries.Employees
 {
     public class GetEmployees : IRequest<EmployeeModel[]>
     {
-        public int[] EmployeeIds { get; }
+        public long[] EmployeeIds { get; }
 
-        public GetEmployees(int[] employeeIds)
+        public GetEmployees(long[] employeeIds)
         {
             EmployeeIds = employeeIds;
         }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.DatabaseContext.Migrations
 {
     [DbContext(typeof(EmployeeDbContext))]
-    [Migration("20231115110944_Initial")]
+    [Migration("20231125140442_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,8 +26,8 @@ namespace Infrastructure.Persistence.DatabaseContext.Migrations
 
             modelBuilder.Entity("Domain.Aggregates.Employee", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.Property<long>("Id")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -68,8 +68,8 @@ namespace Infrastructure.Persistence.DatabaseContext.Migrations
                 {
                     b.OwnsOne("Domain.Values.PhoneNumber", "PhoneNumber", b1 =>
                         {
-                            b1.Property<int>("EmployeeId")
-                                .HasColumnType("int");
+                            b1.Property<long>("EmployeeId")
+                                .HasColumnType("bigint");
 
                             b1.Property<string>("MobilePhone")
                                 .IsRequired()

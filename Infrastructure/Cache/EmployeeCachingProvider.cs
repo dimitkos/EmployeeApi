@@ -2,16 +2,16 @@
 
 namespace Infrastructure.Cache
 {
-    class EmployeeCachingProvider : ICachingProvider<int, Employee>
+    class EmployeeCachingProvider : ICachingProvider<long, Employee>
     {
-        private readonly ICacheAdapter<int, Employee> _cacheAdapter;
+        private readonly ICacheAdapter<long, Employee> _cacheAdapter;
 
-        public EmployeeCachingProvider(ICacheAdapter<int, Employee> cacheAdapter)
+        public EmployeeCachingProvider(ICacheAdapter<long, Employee> cacheAdapter)
         {
             _cacheAdapter = cacheAdapter;
         }
 
-        public void Remove(int[] keys)
+        public void Remove(long[] keys)
             => _cacheAdapter.Remove(keys);
 
         public void Set(Employee employee)

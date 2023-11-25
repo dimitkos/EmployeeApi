@@ -8,10 +8,10 @@ namespace Application.Commands.Employees
     class UpdateSalaryHandler : IRequestHandler<UpdateSalary, Unit>
     {
         private readonly IEmployeePersistence _persistence;
-        private readonly IEntityRetrieval<int, Employee> _retrieval;
+        private readonly IEntityRetrieval<long, Employee> _retrieval;
         private readonly ILogger<UpdateSalaryHandler> _logger;
 
-        public UpdateSalaryHandler(IEmployeePersistence persistence, IEntityRetrieval<int, Employee> retrieval, ILogger<UpdateSalaryHandler> logger)
+        public UpdateSalaryHandler(IEmployeePersistence persistence, IEntityRetrieval<long, Employee> retrieval, ILogger<UpdateSalaryHandler> logger)
         {
             _persistence = persistence;
             _retrieval = retrieval;

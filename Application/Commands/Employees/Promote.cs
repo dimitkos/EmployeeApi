@@ -4,9 +4,9 @@ namespace Application.Commands.Employees
 {
     public class Promote : IRequest<Unit>
     {
-        public int EmployeeId { get; }
+        public long EmployeeId { get; }
 
-        public Promote(int employeeId)
+        public Promote(long employeeId)
         {
             EmployeeId = employeeId;
         }

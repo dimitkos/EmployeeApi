@@ -3,9 +3,11 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Common;
 using FluentValidation;
+using IdGen.DependencyInjection;
 using Infrastructure;
 using Infrastructure.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using System.Reflection;
 
@@ -33,7 +35,7 @@ namespace Api
 
             ConfigureServices(builder.Services, builder.Configuration);
 
-            var app = builder.Build();
+            var app = builder.Build();        
 
             Configure(app);
         }
@@ -42,13 +44,12 @@ namespace Api
         {
             services.AddControllers();
             services.AddValidatorsFromAssembly(Assembly.GetAssembly(typeof(AutofacApplicationModule)));
+            var apiInstanceSettings = configuration.GetSection(nameof(ApiInstanceSettings)).Get<ApiInstanceSettings>();
+            services.AddIdGen(apiInstanceSettings.IdConfiguration);
             services.AddAuthorization();
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-
-            var apiInstanceSettings = configuration.GetSection(nameof(ApiInstanceSettings)).Get<ApiInstanceSettings>();
-#warning configure id gen
 
             RegisterConfiguration(services, configuration);
             RegisterDatabase(services, configuration);
@@ -85,6 +86,7 @@ namespace Api
         {
             builder.RegisterModule(new AutofacApiModule());
             builder.RegisterModule(new AutofacApplicationModule());
+            builder.RegisterModule(new AutofacCommonModule());
             builder.RegisterModule(new AutofacInfrastructureModule());
         }
 

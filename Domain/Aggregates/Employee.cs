@@ -3,10 +3,9 @@ using Shared;
 
 namespace Domain.Aggregates
 {
-#warning add aggregateroot that contains id
-    public class Employee
+    public class Employee : AggregateRoot<long>
     {
-        public int Id { get; }
+        public long Id { get; }
         public string Name { get; }
         public string Surname { get; }
         public Gender Gender { get; }
@@ -17,7 +16,7 @@ namespace Domain.Aggregates
         public DateTime CreatedAt { get; }
         public DateTime UpdatedAt { get; private set; }
 
-        public Employee(int id, string name, string surname, Gender gender, bool isManager, decimal salary, string email, PhoneNumber phoneNumber, DateTime createdAt, DateTime updatedAt)
+        public Employee(long id, string name, string surname, Gender gender, bool isManager, decimal salary, string email, PhoneNumber phoneNumber, DateTime createdAt, DateTime updatedAt) : base(id)
         {
             Id = id;
             Name = name;
@@ -31,12 +30,12 @@ namespace Domain.Aggregates
             UpdatedAt = updatedAt;
         }
 
-        private Employee()
+        private Employee() : base(default)
         {
 
         }
 
-        public static Employee Create(int id, string name, string surname, Gender gender, decimal salary, string email, PhoneNumber phoneNumber)
+        public static Employee Create(long id, string name, string surname, Gender gender, decimal salary, string email, PhoneNumber phoneNumber)
         {
             var employee = new Employee(
                 id: id,

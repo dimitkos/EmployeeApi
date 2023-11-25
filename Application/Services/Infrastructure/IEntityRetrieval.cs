@@ -1,7 +1,9 @@
-﻿namespace Application.Services.Infrastructure
+﻿using Domain;
+
+namespace Application.Services.Infrastructure
 {
-#warning check this
-    public interface IEntityRetrieval<TKey, TResult> where TResult : class //and root entitykey
+    public interface IEntityRetrieval<TKey, TResult> 
+        where TResult : class 
     {
         Task<TResult?> TryRetrieve(TKey key);
         Task<TResult> Retrieve(TKey key);

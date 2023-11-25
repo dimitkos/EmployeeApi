@@ -8,7 +8,7 @@
 
     public class EmployeeModel
     {
-        public int Id { get; }
+        public long Id { get; }
         public string Name { get; }
         public string Surname { get; }
         public Gender Gender { get; }
@@ -17,7 +17,7 @@
         public string Email { get;  }
         public PhoneNumberModel PhoneNumber { get; }
 
-        public EmployeeModel(int id, string name, string surname, Gender gender, bool isManager, decimal salary, string email, PhoneNumberModel phoneNumber)
+        public EmployeeModel(long id, string name, string surname, Gender gender, bool isManager, decimal salary, string email, PhoneNumberModel phoneNumber)
         {
             Id = id;
             Name = name;
