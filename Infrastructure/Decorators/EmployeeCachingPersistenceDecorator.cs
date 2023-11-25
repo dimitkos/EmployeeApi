@@ -7,9 +7,9 @@ namespace Infrastructure.Decorators
     class EmployeeCachingPersistenceDecorator : IEmployeePersistence
     {
         private readonly IEmployeePersistence _persistence;
-        private readonly ICachingProvider<int, Employee> _cachingProvider;
+        private readonly ICachingProvider<long, Employee> _cachingProvider;
 
-        public EmployeeCachingPersistenceDecorator(IEmployeePersistence persistence, ICachingProvider<int, Employee> cachingProvider)
+        public EmployeeCachingPersistenceDecorator(IEmployeePersistence persistence, ICachingProvider<long, Employee> cachingProvider)
         {
             _persistence = persistence;
             _cachingProvider = cachingProvider;
@@ -22,7 +22,7 @@ namespace Infrastructure.Decorators
             _cachingProvider.Set(employee);
         }
 
-        public async Task DeleteEmployees(int[] employeeIds)
+        public async Task DeleteEmployees(long[] employeeIds)
         {
             await _persistence.DeleteEmployees(employeeIds);
 

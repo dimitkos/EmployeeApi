@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Commands.Employees
 {
-    class EmployeeRetrievePersistence : IEntityRetrieval<int, Employee>
+    class EmployeeRetrievePersistence : IEntityRetrieval<long, Employee>
     {
         private readonly DbContextOptions<EmployeeDbContext> _options;
 
@@ -14,7 +14,7 @@ namespace Infrastructure.Persistence.Commands.Employees
             _options = options;
         }
 
-        public async Task<Employee> Retrieve(int key)
+        public async Task<Employee> Retrieve(long key)
         {
             var employee = await TryRetrieve(key);
 
@@ -24,7 +24,7 @@ namespace Infrastructure.Persistence.Commands.Employees
             return employee;
         }
 
-        public async Task<Employee?> TryRetrieve(int key)
+        public async Task<Employee?> TryRetrieve(long key)
         {
             using var context = new EmployeeDbContext(_options);
 

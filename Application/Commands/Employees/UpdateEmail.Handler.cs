@@ -8,12 +8,12 @@ namespace Application.Commands.Employees
     class UpdateEmailHandler : IRequestHandler<UpdateEmail, Unit>
     {
         private readonly IEmployeePersistence _persistence;
-        private readonly IEntityRetrieval<int, Employee> _retrieval;
+        private readonly IEntityRetrieval<long, Employee> _retrieval;
         private readonly ILogger<UpdateEmailHandler> _logger;
 
         public UpdateEmailHandler(
             IEmployeePersistence persistence,
-            IEntityRetrieval<int, Employee> retrieval,
+            IEntityRetrieval<long, Employee> retrieval,
             ILogger<UpdateEmailHandler> logger)
         {
             _persistence = persistence;

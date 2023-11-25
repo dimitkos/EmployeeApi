@@ -68,7 +68,7 @@ namespace Infrastructure.Persistence.Commands.Employees
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteEmployees(int[] employeeIds)
+        public async Task DeleteEmployees(long[] employeeIds)
         {
             using var context = new EmployeeDbContext(_options);
 

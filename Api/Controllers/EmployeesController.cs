@@ -27,7 +27,7 @@ namespace Api.Controllers
 
         [HttpPost("GetEmployees")]
         [ProducesResponseType(typeof(EmployeeModel[]), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetEmployees([FromBody] int[] employeeIds)
+        public async Task<IActionResult> GetEmployees([FromBody] long[] employeeIds)
         {
             EmployeeModel[] employees = await _mediator.Send(new GetEmployees(employeeIds));
             return Ok(employees);
@@ -49,9 +49,9 @@ namespace Api.Controllers
             return Ok();
         }
 
-        [HttpPost("Promote/{employeeId:int}")]
+        [HttpPost("Promote/{employeeId:long}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Promote([FromRoute] int employeeId)
+        public async Task<IActionResult> Promote([FromRoute] long employeeId)
         {
             await _mediator.Send(new Promote(employeeId));
             return Ok();
@@ -83,7 +83,7 @@ namespace Api.Controllers
 
         [HttpDelete("DeleteEmployees")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteEmployees([FromBody] int[] employeeIds)
+        public async Task<IActionResult> DeleteEmployees([FromBody] long[] employeeIds)
         {
             await _mediator.Send(new DeleteEmployees(employeeIds));
             return Ok();

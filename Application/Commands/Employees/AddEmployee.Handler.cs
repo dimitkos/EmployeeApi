@@ -1,4 +1,5 @@
 ﻿using Application.Services.Infrastructure;
+using Common;
 using Domain.Aggregates;
 using Domain.Values;
 using MediatR;
@@ -9,19 +10,23 @@ namespace Application.Commands.Employees
     class AddEmployeeHandler : IRequestHandler<AddEmployee, Unit>
     {
         private readonly IEmployeePersistence _persistence;
+        private readonly IIdGenerator _idGenerator;
         private readonly ILogger<AddEmployeeHandler> _logger;
 
-        public AddEmployeeHandler(IEmployeePersistence persistence, ILogger<AddEmployeeHandler> logger)
+        public AddEmployeeHandler(
+            IEmployeePersistence persistence,
+            IIdGenerator idGenerator,
+            ILogger<AddEmployeeHandler> logger)
         {
             _persistence = persistence;
             _logger = logger;
+            _idGenerator = idGenerator;
         }
 
         public async Task<Unit> Handle(AddEmployee request, CancellationToken cancellationToken)
         {
-#warning add id generator
             var employee = Employee.Create(
-                id: 3,
+                id: _idGenerator.GenerateId(),
                 name: request.Payload.Name,
                 surname: request.Payload.Surname,
                 gender: request.Payload.Gender,
