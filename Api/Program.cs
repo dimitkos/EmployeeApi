@@ -3,11 +3,13 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Common;
 using FluentValidation;
+using Gateway;
 using IdGen.DependencyInjection;
 using Infrastructure;
 using Infrastructure.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Polly;
 using Serilog;
 using System.Reflection;
 
@@ -35,7 +37,7 @@ namespace Api
 
             ConfigureServices(builder.Services, builder.Configuration);
 
-            var app = builder.Build();        
+            var app = builder.Build();
 
             Configure(app);
         }
@@ -43,9 +45,18 @@ namespace Api
         private static void ConfigureServices(IServiceCollection services, ConfigurationManager configuration)
         {
             services.AddControllers();
+
+            services.AddHttpClient(Constants.HttpClients.Users)
+                .AddTransientHttpErrorPolicy(policyBuilder =>
+                    policyBuilder.WaitAndRetryAsync(3, retryNumber => TimeSpan.FromMilliseconds(600)))
+                .AddTransientHttpErrorPolicy(policyBuilder =>
+                    policyBuilder.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
+
             services.AddValidatorsFromAssembly(Assembly.GetAssembly(typeof(AutofacApplicationModule)));
+
             var apiInstanceSettings = configuration.GetSection(nameof(ApiInstanceSettings)).Get<ApiInstanceSettings>();
             services.AddIdGen(apiInstanceSettings.IdConfiguration);
+
             services.AddAuthorization();
 
             services.AddEndpointsApiExplorer();
@@ -80,6 +91,7 @@ namespace Api
         {
             services.AddOptions<ApiInstanceSettings>().Bind(configuration.GetSection(nameof(ApiInstanceSettings))).ValidateDataAnnotations();
             services.AddOptions<CacheSettings>().Bind(configuration.GetSection(nameof(CacheSettings))).ValidateDataAnnotations();
+            services.AddOptions<ApiConfiguration>().Bind(configuration.GetSection(nameof(ApiConfiguration))).ValidateDataAnnotations();
         }
 
         private static void RegisterAutofacModules(ContainerBuilder builder)
@@ -88,6 +100,7 @@ namespace Api
             builder.RegisterModule(new AutofacApplicationModule());
             builder.RegisterModule(new AutofacCommonModule());
             builder.RegisterModule(new AutofacInfrastructureModule());
+            builder.RegisterModule(new AutofacGatewayModule());
         }
 
         private static void RegisterDatabase(IServiceCollection services, ConfigurationManager configuration)

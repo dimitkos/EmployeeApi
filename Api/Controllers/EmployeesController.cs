@@ -88,5 +88,13 @@ namespace Api.Controllers
             await _mediator.Send(new DeleteEmployees(employeeIds));
             return Ok();
         }
+
+        [HttpGet("GetUsers")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetUsers()
+        {
+            await _mediator.Send(new ComposeEmployeesWithUsers());
+            return Ok();
+        }
     }
 }
