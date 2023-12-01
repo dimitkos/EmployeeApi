@@ -1,3 +1,4 @@
+using Api.Middlewares;
 using Application;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -73,11 +74,12 @@ namespace Api
             if (app.Environment.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
+            app.UseRouting();
+            app.UseMiddleware<ExceptionsMiddleware>();
+            app.UseAuthorization();
+
             app.UseSwagger();
             app.UseSwaggerUI();
-
-            app.UseRouting();
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
