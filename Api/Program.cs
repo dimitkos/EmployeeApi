@@ -110,7 +110,7 @@ namespace Api
             var connectionString = configuration.GetConnectionString(Constants.Databases.Employees);
 
             services
-                .AddDbContext<EmployeeDbContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Transient);
+                .AddDbContext<EmployeeDbContext>(options => options.UseSqlite(connectionString), ServiceLifetime.Transient);
         }
 
         private static void RegisterCaching(IServiceCollection services)

@@ -16,7 +16,7 @@ namespace Infrastructure.Persistence.DatabaseContext
                 .Build();
 
             var builder = new DbContextOptionsBuilder<EmployeeDbContext>();
-            builder.UseSqlServer(configuration.GetConnectionString(Constants.Databases.Employees));
+            builder.UseSqlite(configuration.GetConnectionString(Constants.Databases.Employees));
 
             return new EmployeeDbContext(builder.Options);
         }
